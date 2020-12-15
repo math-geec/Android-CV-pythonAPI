@@ -4,27 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnCamera"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnGallary"
-        android:text="Camera" />
-
-    <Button
-        android:id="@+id/btnGallary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnCamera"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="Gallery" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
