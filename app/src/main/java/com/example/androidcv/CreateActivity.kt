@@ -36,7 +36,7 @@ class CreateActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 photoUri = data?.data
                 Log.i("btnGallery", "photoUri $photoUri")
-                imageView
+                imageView.setImageURI(photoUri)
             } else {
                 Toast.makeText(this, "Image seletion canceled.", Toast.LENGTH_SHORT).show()
             }

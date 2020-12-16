@@ -13,5 +13,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        fabCreate.setOnClickListener {
+            val intent = Intent(this, CreateActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
