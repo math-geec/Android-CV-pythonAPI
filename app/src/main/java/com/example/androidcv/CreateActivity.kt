@@ -24,7 +24,17 @@ class CreateActivity : AppCompatActivity() {
             if (imagePickerIntent.resolveActivity(packageManager) != null) {
                 startActivityForResult(imagePickerIntent, PICK_PHOTO_CODE)
             }
+        }
 
+        btnUpload.setOnClickListener {
+            handleUploadButtonClick()
+        }
+    }
+
+    private fun handleUploadButtonClick() {
+        if (photoUri == null) {
+            Toast.makeText(this, "Error: No photo selected.", Toast.LENGTH_SHORT).show()
+            return
         }
     }
 

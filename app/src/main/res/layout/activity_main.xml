@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="#673AB7"
-    android:paddingBottom="16dp"
+    android:paddingBottom="@dimen/padding_normal"
     tools:context=".MainActivity">
 
 
