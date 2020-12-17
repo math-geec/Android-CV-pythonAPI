@@ -28,9 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnUpload"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnCamera"
-        android:src="@mipmap/ic_launcher"
-        android:contentDescription="TODO" />
+        app:layout_constraintBottom_toTopOf="@id/btnCamera" />
 
     <Button
         android:id="@+id/btnCamera"
