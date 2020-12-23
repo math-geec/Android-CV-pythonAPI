@@ -80,12 +80,12 @@ class CreateActivity : AppCompatActivity() {
         val outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
 
-        val body = UploadRequestBody(file, "image", this)
+        // val body = UploadRequestBody(file, "image", this)
         RetrofitAPI().uploadImage(
             MultipartBody.Part.createFormData(
                 "image",
                 file.name,
-                body
+                // body
             ),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json")
         ).enqueue(object : Callback<UploadResponse> {

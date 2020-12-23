@@ -6,7 +6,7 @@ import android.provider.OpenableColumns
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
-class Utils {
+// class Utils {
     fun View.snackbar(message: String) {
         Snackbar.make(
             this,
@@ -30,4 +30,4 @@ class Utils {
         }
         return name
     }
-}
+// }
