@@ -12,7 +12,16 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import kotlinx.android.synthetic.main.activity_create.*
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 private const val FILE_NAME = "photo.jpg"
 private const val PICK_PHOTO_CODE = 42
@@ -63,6 +72,36 @@ class CreateActivity : AppCompatActivity() {
             Toast.makeText(this, "No photo selected.", Toast.LENGTH_SHORT).show()
             return
         }
+        val parcelFileDescriptor =
+            contentResolver.openFileDescriptor(photoUri!!, "r", null) ?: return
+
+        val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+        val file = File(cacheDir, contentResolver.getFileName(photoUri!!))
+        val outputStream = FileOutputStream(file)
+        inputStream.copyTo(outputStream)
+
+        val body = UploadRequestBody(file, "image", this)
+        RetrofitAPI().uploadImage(
+            MultipartBody.Part.createFormData(
+                "image",
+                file.name,
+                body
+            ),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json")
+        ).enqueue(object : Callback<UploadResponse> {
+            override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                layout_root.snackbar(t.message!!)
+            }
+
+            override fun onResponse(
+                call: Call<UploadResponse>,
+                response: Response<UploadResponse>
+            ) {
+                response.body()?.let {
+                    layout_root.snackbar(it.message)
+                }
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

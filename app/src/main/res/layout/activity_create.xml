@@ -8,6 +8,7 @@
     android:paddingBottom="@dimen/padding_normal"
     android:paddingStart="@dimen/padding_normal"
     android:paddingEnd="@dimen/padding_normal"
+    android:id="@+id/layout_root"
     tools:context=".CreateActivity">
 
     <Button
