@@ -81,27 +81,28 @@ class CreateActivity : AppCompatActivity() {
         inputStream.copyTo(outputStream)
 
         // val body = UploadRequestBody(file, "image", this)
-        // RetrofitAPI().uploadImage(
-        //     MultipartBody.Part.createFormData(
-        //         "image",
-        //         file.name,
-        //         // body
-        //     ),
-        //     RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json")
-        // ).enqueue(object : Callback<UploadResponse> {
-        //     override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
-        //         layout_root.snackbar(t.message!!)
-        //     }
-        //
-        //     override fun onResponse(
-        //         call: Call<UploadResponse>,
-        //         response: Response<UploadResponse>
-        //     ) {
-        //         response.body()?.let {
-        //             layout_root.snackbar(it.message)
-        //         }
-        //     }
-        // })
+        val body = UploadRequestBody(file, "image")
+        RetrofitAPI().uploadImage(
+            MultipartBody.Part.createFormData(
+                "image",
+                file.name,
+                body
+            ),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json")
+        ).enqueue(object : Callback<UploadResponse> {
+            override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                layout_root.snackbar(t.message!!)
+            }
+
+            override fun onResponse(
+                call: Call<UploadResponse>,
+                response: Response<UploadResponse>
+            ) {
+                response.body()?.let {
+                    layout_root.snackbar(it.message)
+                }
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
