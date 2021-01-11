@@ -12,7 +12,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import kotlinx.android.synthetic.main.activity_create.*
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -24,8 +23,6 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 
 private const val FILE_NAME = "photo.jpg"
-private const val PICK_PHOTO_CODE = 42
-private const val CAPTURE_PHOTO_CODE = 41
 private lateinit var photoFile: File
 
 class CreateActivity : AppCompatActivity() {
@@ -48,7 +45,8 @@ class CreateActivity : AppCompatActivity() {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             photoFile = getPhotoFile(FILE_NAME)
             // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
-            val fileProvider = FileProvider.getUriForFile(this, "com.example.fileprovider", photoFile)
+            val fileProvider =
+                FileProvider.getUriForFile(this, "com.example.fileprovider", photoFile)
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
             if (takePictureIntent.resolveActivity(this.packageManager) != null) {
                 startActivityForResult(takePictureIntent, CAPTURE_PHOTO_CODE)
@@ -80,8 +78,9 @@ class CreateActivity : AppCompatActivity() {
         val outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
 
-        // val body = UploadRequestBody(file, "image", this)
-        val body = UploadRequestBody(file, "image")
+        progress_bar.progress = 0
+        val body = UploadRequestBody(file, "image", this)
+        // val body = UploadRequestBody(file, "image")
         RetrofitAPI().uploadImage(
             MultipartBody.Part.createFormData(
                 "image",
@@ -92,6 +91,7 @@ class CreateActivity : AppCompatActivity() {
         ).enqueue(object : Callback<UploadResponse> {
             override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
                 layout_root.snackbar(t.message!!)
+                progress_bar.progress = 0
             }
 
             override fun onResponse(
@@ -100,6 +100,7 @@ class CreateActivity : AppCompatActivity() {
             ) {
                 response.body()?.let {
                     layout_root.snackbar(it.message)
+                    progress_bar.progress = 100
                 }
             }
         })
@@ -117,7 +118,7 @@ class CreateActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Image selection canceled.", Toast.LENGTH_SHORT).show()
             }
-        // if the result is requested from camera
+            // if the result is requested from camera
         } else if (requestCode == CAPTURE_PHOTO_CODE && resultCode == Activity.RESULT_OK) {
             val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
             imageView.setImageBitmap(takenImage)
@@ -126,4 +127,8 @@ class CreateActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        const val PICK_PHOTO_CODE = 42
+        const val CAPTURE_PHOTO_CODE = 41
+    }
 }

@@ -2,7 +2,6 @@ package com.example.androidcv
 
 import android.os.Handler
 import android.os.Looper
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okio.BufferedSink
@@ -10,9 +9,9 @@ import java.io.File
 import java.io.FileInputStream
 
 class UploadRequestBody(
-        private val file: File,
-        private val contentType: String,
-        // private val callback: UploadCallback
+    private val file: File,
+    private val contentType: String,
+    private val callback: UploadCallback
     ) : RequestBody() {
 
         override fun contentType() = "$contentType/*".toMediaTypeOrNull()
@@ -44,7 +43,7 @@ class UploadRequestBody(
             private val total: Long
         ) : Runnable {
             override fun run() {
-                // callback.onProgressUpdate((100 * uploaded / total).toInt())
+                callback.onProgressUpdate((100 * uploaded / total).toInt())
             }
         }
 

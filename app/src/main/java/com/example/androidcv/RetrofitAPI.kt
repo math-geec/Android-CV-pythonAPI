@@ -13,7 +13,7 @@ import retrofit2.http.*
 interface RetrofitAPI {
 
     @Multipart
-    @POST("Api.php?apicall=upload")
+    @POST("/generate")
     fun uploadImage(
         @Part image: MultipartBody.Part,
         @Part("desc") desc: RequestBody
@@ -22,7 +22,7 @@ interface RetrofitAPI {
     companion object {
         operator fun invoke(): RetrofitAPI {
             return Retrofit.Builder()
-                .baseUrl("http://10.10.10.118/ImageUploader/")
+                .baseUrl("http://<local_ip>:5000")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(RetrofitAPI::class.java)
