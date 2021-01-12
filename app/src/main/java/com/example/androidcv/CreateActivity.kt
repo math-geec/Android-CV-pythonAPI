@@ -25,7 +25,7 @@ import java.io.FileOutputStream
 private const val FILE_NAME = "photo.jpg"
 private lateinit var photoFile: File
 
-class CreateActivity : AppCompatActivity() {
+class CreateActivity : AppCompatActivity(), UploadRequestBody.UploadCallback {
     private var photoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,6 +125,10 @@ class CreateActivity : AppCompatActivity() {
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun onProgressUpdate(percentage: Int) {
+
     }
 
     companion object {
