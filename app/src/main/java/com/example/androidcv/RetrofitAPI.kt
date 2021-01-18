@@ -10,9 +10,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
+// interface that defines how Retrofit talks to the web server using HTTP requests
 interface RetrofitAPI {
 
     @Multipart
+    // Retrofit appends the endpoint "generate" to the base URL (defined in the Retrofit builder),
+    // and creates a Call object
     @POST("/generate")
     fun uploadImage(
         @Part image: MultipartBody.Part,
@@ -22,8 +25,11 @@ interface RetrofitAPI {
     companion object {
         operator fun invoke(): RetrofitAPI {
             return Retrofit.Builder()
-                .baseUrl("http://<local_ip>:5000")
+                // the base URI for the web service
+                .baseUrl("http://localhost:5000")
+                // add converter factory to deal with the data gets back from web service
                 .addConverterFactory(GsonConverterFactory.create())
+                // create the Retrofit object
                 .build()
                 .create(RetrofitAPI::class.java)
         }

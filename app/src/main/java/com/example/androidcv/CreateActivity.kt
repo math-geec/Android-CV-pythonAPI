@@ -92,6 +92,7 @@ class CreateActivity : AppCompatActivity(), UploadRequestBody.UploadCallback {
             override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
                 layout_root.snackbar(t.message!!)
                 progress_bar.progress = 0
+                println("---TTTT :: POST Throwable EXCEPTION:: " + t.message)
             }
 
             override fun onResponse(
@@ -101,6 +102,7 @@ class CreateActivity : AppCompatActivity(), UploadRequestBody.UploadCallback {
                 response.body()?.let {
                     layout_root.snackbar(it.message)
                     progress_bar.progress = 100
+                    println("---TTTT :: POST msg from server :: " + it.message)
                 }
             }
         })
