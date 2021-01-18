@@ -2,7 +2,7 @@
 
 
 
-### Status: Testing upload image
+### Status: Fixing issue in receiving image response
 
 
 
