@@ -26,7 +26,7 @@ interface RetrofitAPI {
         operator fun invoke(): RetrofitAPI {
             return Retrofit.Builder()
                 // the base URI for the web service
-                .baseUrl("http://localhost:5000")
+                .baseUrl("http://<local_ip>:5000")
                 // add converter factory to deal with the data gets back from web service
                 .addConverterFactory(GsonConverterFactory.create())
                 // create the Retrofit object
