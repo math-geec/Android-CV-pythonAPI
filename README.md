@@ -1,20 +1,9 @@
 ## pythonAPI
 
+Style Transfer app connects external model through API request.
 
+### Status: Pass the happy path
 
-### Status: Fixing issue in receiving image response
-
-
-
-*Known issue*:
-
-- cuda = 0 kills all the RAM
-
-- cuda = 1 runs out of drive space
-
-
-
-*Possible solution*: reduce content image size 
 
 
 
