@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_create.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -89,12 +90,12 @@ class CreateActivity : AppCompatActivity(), UploadRequestBody.UploadCallback {
                 file.name,
                 body
             ),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json")
+            "json".toRequestBody("multipart/form-data".toMediaTypeOrNull())
         ).enqueue(object : Callback<UploadResponse> {
             override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
-                layout_root.snackbar(t.message!!)
+                Log.d("Response", "onFailure: ${t.message}")
+                // layout_root.snackbar(t.message!!)
                 progress_bar.progress = 0
-                println("---TTTT :: POST Throwable EXCEPTION:: " + t.message)
             }
 
             override fun onResponse(
@@ -103,9 +104,8 @@ class CreateActivity : AppCompatActivity(), UploadRequestBody.UploadCallback {
             ) {
                 Log.d("Response", "onResponse: ${response.body()}")
                 response.body()?.let {
-                    layout_root.snackbar(it.image)
+                    // layout_root.snackbar(it.image)
                     progress_bar.progress = 100
-                    println("---TTTT :: POST msg from server :: " + it.image)
                     val imageBytes = Base64.decode(it.image, Base64.DEFAULT)
                     val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                     imageView.setImageBitmap(decodedImage)
